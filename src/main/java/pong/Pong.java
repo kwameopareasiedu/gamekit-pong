@@ -8,7 +8,7 @@ public class Pong extends Application {
     super(
       new Settings(
         "GameKit - Pong",
-        Resolution.SVGA,
+        Resolution.create(540, 840),
         WindowMode.WINDOWED,
         RenderingStrategy.SPEED,
         Antialiasing.ON
@@ -19,6 +19,7 @@ public class Pong extends Application {
   public static void main(String[] args) {
     Pong pong = new Pong();
     pong.loadScene(new MenuScene());
+//    pong.loadScene(new PlayScene());
     pong.run();
   }
 }

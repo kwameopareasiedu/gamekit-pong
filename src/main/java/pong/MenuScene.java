@@ -1,17 +1,16 @@
 package pong;
 
 import dev.gamekit.animation.Animation;
+import dev.gamekit.core.Application;
 import dev.gamekit.core.Renderer;
 import dev.gamekit.core.Scene;
 import dev.gamekit.ui.enums.Alignment;
 import dev.gamekit.ui.enums.CrossAxisAlignment;
+import dev.gamekit.ui.events.MouseEvent;
 import dev.gamekit.ui.widgets.*;
 import dev.gamekit.ui.widgets.Button;
 
 import java.awt.*;
-
-import static pong.Constants.BG_COLOR;
-import static pong.Constants.DEFAULT_FONT;
 
 public class MenuScene extends Scene {
   Animation rotateAnim = new Animation(3000, Animation.RepeatMode.RESTART);
@@ -29,7 +28,7 @@ public class MenuScene extends Scene {
 
   @Override
   protected void render() {
-    Renderer.clear(BG_COLOR);
+    Renderer.clear(Constants.BG_COLOR);
 
     Renderer.fillRect(0, 0, 96, 232)
       .withColor(Color.BLACK)
@@ -45,18 +44,18 @@ public class MenuScene extends Scene {
   protected Widget createUI() {
     return Stack.create(
       Align.create(
-        Align.options().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.START),
+        Align.config().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.START),
         Padding.create(
-          Padding.options().padding(72),
+          Padding.config().padding(72),
           Column.create(
-            Column.options().crossAxisAlignment(CrossAxisAlignment.CENTER).gapSize(2),
+            Column.config().crossAxisAlignment(CrossAxisAlignment.CENTER).gapSize(2),
             Text.create(
-              Text.options().font(DEFAULT_FONT).fontSize(64).alignment(Alignment.CENTER)
+              Text.config().font(Constants.DEFAULT_FONT).fontSize(64).alignment(Alignment.CENTER)
                 .shadowEnabled(true).shadowOffset(6, 4).shadowColor(Color.DARK_GRAY),
-              "Circular Pong"
+              "Circle Pong"
             ),
             Text.create(
-              Text.options().fontSize(24).alignment(Alignment.CENTER)
+              Text.config().fontSize(24).alignment(Alignment.CENTER)
                 .shadowEnabled(true).shadowOffset(3, 2).shadowColor(Color.DARK_GRAY),
               "Pong but in a circle!"
             )
@@ -64,35 +63,40 @@ public class MenuScene extends Scene {
         )
       ),
       Align.create(
-        Align.options().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.CENTER),
+        Align.config().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.CENTER),
         Padding.create(
-          Padding.options().padding(128, 0, 0, 0),
+          Padding.config().padding(128, 0, 0, 0),
           Button.create(
-            Button.options(),
+            Button.config().mouseListener(this::handleStartGame),
             Padding.create(
-              Padding.options().padding(32, 16),
+              Padding.config().padding(32, 16),
               Text.create("Play")
             )
           )
         )
       ),
       Align.create(
-        Align.options().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.END),
+        Align.config().horizontalAlignment(Alignment.END).verticalAlignment(Alignment.END),
         Padding.create(
-          Padding.options().padding(24),
+          Padding.config().padding(24),
           Column.create(
-            Column.options().crossAxisAlignment(CrossAxisAlignment.CENTER).gapSize(4),
+            Column.config().crossAxisAlignment(CrossAxisAlignment.END).gapSize(4),
             Text.create(
-              Text.options().fontSize(16).alignment(Alignment.CENTER),
+              Text.config().fontSize(16).alignment(Alignment.CENTER),
               "Kwame Opare Asiedu"
             ),
             Text.create(
-              Text.options().fontSize(16).alignment(Alignment.CENTER),
+              Text.config().fontSize(16).alignment(Alignment.CENTER),
               "GameKit v0.5.0"
             )
           )
         )
       )
     );
+  }
+
+  private void handleStartGame(MouseEvent ev) {
+    if (ev.type == MouseEvent.Type.CLICK)
+      Application.getInstance().loadScene(new PlayScene());
   }
 }
