@@ -69,20 +69,30 @@ public class MenuScene extends Scene {
           Align.config().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.CENTER),
           Padding.create(
             Padding.config().padding(128, 0, 0, 0),
-            Column.create(
-              Column.config().crossAxisAlignment(CrossAxisAlignment.CENTER),
-              Button.create(
-                Button.config().mouseListener(this::handleStartGame),
-                Padding.create(
-                  Padding.config().padding(32, 16),
-                  Text.create("Play")
-                )
-              ),
-              Button.create(
-                Button.config().mouseListener(this::handleToggleHelpPanel),
-                Padding.create(
-                  Padding.config().padding(32, 16),
-                  Text.create("Help")
+            Sized.create(
+              Sized.config().width(160).intrinsicHeight(),
+              Column.create(
+                Column.config().crossAxisAlignment(CrossAxisAlignment.STRETCH),
+                Button.create(
+                  Button.config().mouseListener(this::handleStartGame),
+                  Padding.create(
+                    Padding.config().padding(32, 16),
+                    Text.create("Play")
+                  )
+                ),
+                Button.create(
+                  Button.config().mouseListener(this::handleToggleHelpPanel),
+                  Padding.create(
+                    Padding.config().padding(32, 16),
+                    Text.create("Help")
+                  )
+                ),
+                Button.create(
+                  Button.config().mouseListener(this::handleQuit),
+                  Padding.create(
+                    Padding.config().padding(32, 16),
+                    Text.create("Quit")
+                  )
                 )
               )
             )
@@ -172,6 +182,12 @@ public class MenuScene extends Scene {
     if (ev.type == MouseEvent.Type.CLICK) {
       showHelp = !showHelp;
       updateUI();
+    }
+  }
+
+  private void handleQuit(MouseEvent ev) {
+    if (ev.type == MouseEvent.Type.CLICK) {
+      Application.getInstance().quit();
     }
   }
 }

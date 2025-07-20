@@ -12,6 +12,7 @@ public class Spinner extends Entity {
   private final double width = 1.2;
   private final double height = 0.175;
   private double rotation = 0;
+  private boolean spin = false;
 
   public Spinner() {
     super("Spinner");
@@ -19,13 +20,15 @@ public class Spinner extends Entity {
 
   @Override
   protected void update() {
-    rotation += 0.75;
+    if (spin) {
+      rotation += 0.75;
 
-    if (rotation >= 360)
-      rotation -= 360;
+      if (rotation >= 360)
+        rotation -= 360;
 
-    RigidBody rb = findComponent(RigidBody.class);
-    rb.setRotation(rotation);
+      RigidBody rb = findComponent(RigidBody.class);
+      rb.setRotation(rotation);
+    }
   }
 
   @Override
@@ -43,5 +46,9 @@ public class Spinner extends Entity {
     int width = (int) (this.width * dev.gamekit.core.Constants.PIXELS_PER_METER);
     int height = (int) (this.height * dev.gamekit.core.Constants.PIXELS_PER_METER);
     Renderer.fillRect(0, 0, width, height).withColor(Color.CYAN).withRotation(0, 0, rotation);
+  }
+
+  void beginSpin() {
+    spin = true;
   }
 }
