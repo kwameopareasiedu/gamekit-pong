@@ -32,7 +32,7 @@ public class Spinner extends Entity {
   protected List<Component> getComponents() {
     RigidBody rb = new RigidBody();
 
-    rb.setCustomData("Spinner");
+    rb.setUserData(Tag.SPINNER);
     rb.addRectFixture(width, height);
 
     return List.of(rb);

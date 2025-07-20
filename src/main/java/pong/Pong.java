@@ -11,6 +11,7 @@ public class Pong extends Application {
         Resolution.create(600, 840),
         WindowMode.WINDOWED,
         RenderingStrategy.SPEED,
+        TextAntialiasing.ON,
         Antialiasing.ON
       )
     );
@@ -18,8 +19,8 @@ public class Pong extends Application {
 
   public static void main(String[] args) {
     Pong pong = new Pong();
-    pong.loadScene(new MenuScene());
-//    pong.loadScene(new PlayScene());
+//    pong.loadScene(new MenuScene());
+    pong.loadScene(new PlayScene());
     pong.run();
   }
 }

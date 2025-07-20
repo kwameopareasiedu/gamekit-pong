@@ -28,8 +28,11 @@ public class Paddle extends Entity {
   protected List<Component> getComponents() {
     RigidBody rb = new RigidBody();
 
-    rb.setCustomData("Paddle");
-    rb.addRectFixture(width, height, (fx, shape) -> { });
+    rb.setUserData(Tag.PADDLE);
+    rb.addRectFixture(
+      width, height,
+      (fx, shape) -> fx.setFriction(0)
+    );
     rb.setPosition(0, distance);
 
     return List.of(rb);
