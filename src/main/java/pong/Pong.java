@@ -8,7 +8,7 @@ public class Pong extends Application {
     super(
       new Settings(
         "GameKit - Pong",
-        Resolution.create(540, 840),
+        Resolution.create(600, 840),
         WindowMode.WINDOWED,
         RenderingStrategy.SPEED,
         Antialiasing.ON

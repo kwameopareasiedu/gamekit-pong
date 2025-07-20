@@ -1,9 +1,9 @@
 package pong;
 
-import dev.gamekit.components.RigidBody;
 import dev.gamekit.core.Constants;
 import dev.gamekit.core.Renderer;
 import dev.gamekit.core.Scene;
+import dev.gamekit.ui.widgets.Widget;
 
 import java.awt.*;
 
@@ -17,8 +17,6 @@ public class PlayScene extends Scene {
 
   @Override
   protected void start() {
-//    RigidBody.DEBUG_DRAW = true;
-
     if (WALL_COUNT < 5) {
       throw new IllegalArgumentException(
         "Wall count must be greater than 5"
@@ -32,6 +30,7 @@ public class PlayScene extends Scene {
     for (double idx = 0; idx < 360; idx += interval)
       addChild(new Wall(width, distanceFromCenter, idx));
 
+    addChild(new Paddle(distanceFromCenter - 0.05));
     addChild(new Ball());
     addChild(new Spinner());
   }
@@ -40,5 +39,10 @@ public class PlayScene extends Scene {
   protected void render() {
     Renderer.clear(Color.LIGHT_GRAY);
     Renderer.fillCircle(0, 0, WORLD_RADIUS).withColor(Color.BLACK);
+  }
+
+  @Override
+  protected Widget createUI() {
+    return super.createUI();
   }
 }

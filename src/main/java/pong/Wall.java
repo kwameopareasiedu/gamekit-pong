@@ -24,9 +24,8 @@ public class Wall extends Entity {
     RigidBody rb = new RigidBody();
 
     rb.setCustomData("Wall");
-    rb.addRectFixture(width, 0.1, (fx, shape) -> { });
-    rb.setPosition(0, distance);
-    rb.setRotation(rotation, new Vector());
+    rb.addRectFixture(width, 0.1);
+    rb.setRotation(rotation, 0, 0, 0, distance);
 
     return List.of(rb);
   }

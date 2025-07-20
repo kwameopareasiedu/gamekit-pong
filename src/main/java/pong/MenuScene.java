@@ -6,15 +6,18 @@ import dev.gamekit.core.Renderer;
 import dev.gamekit.core.Scene;
 import dev.gamekit.ui.enums.Alignment;
 import dev.gamekit.ui.enums.CrossAxisAlignment;
+import dev.gamekit.ui.enums.MainAxisAlignment;
 import dev.gamekit.ui.events.MouseEvent;
 import dev.gamekit.ui.widgets.*;
 import dev.gamekit.ui.widgets.Button;
+import dev.gamekit.ui.widgets.Panel;
 
 import java.awt.*;
 
 public class MenuScene extends Scene {
-  Animation rotateAnim = new Animation(3000, Animation.RepeatMode.RESTART);
-  Animation bounceAnim = new Animation(1500, Animation.RepeatMode.ALTERNATE);
+  private final Animation rotateAnim = new Animation(3000, Animation.RepeatMode.RESTART);
+  private final Animation bounceAnim = new Animation(1500, Animation.RepeatMode.ALTERNATE);
+  private boolean showHelp = false;
 
   public MenuScene() {
     super("Menu");
@@ -29,65 +32,130 @@ public class MenuScene extends Scene {
   @Override
   protected void render() {
     Renderer.clear(Constants.BG_COLOR);
-
     Renderer.fillRect(0, 0, 96, 232)
       .withColor(Color.BLACK)
       .withRotation(0, -64, 360 * rotateAnim.getValue());
-
     Renderer.fillCircle(0, -64, 160).withColor(Color.WHITE);
-
     Renderer.fillCircle(0, -64 + (int) (-300 * (bounceAnim.getValue() - 0.5)), 16)
       .withColor(Color.GRAY);
   }
 
   @Override
   protected Widget createUI() {
-    return Stack.create(
-      Align.create(
-        Align.config().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.START),
-        Padding.create(
-          Padding.config().padding(72),
-          Column.create(
-            Column.config().crossAxisAlignment(CrossAxisAlignment.CENTER).gapSize(2),
-            Text.create(
-              Text.config().font(Constants.DEFAULT_FONT).fontSize(64).alignment(Alignment.CENTER)
-                .shadowEnabled(true).shadowOffset(6, 4).shadowColor(Color.DARK_GRAY),
-              "Circle Pong"
-            ),
-            Text.create(
-              Text.config().fontSize(24).alignment(Alignment.CENTER)
-                .shadowEnabled(true).shadowOffset(3, 2).shadowColor(Color.DARK_GRAY),
-              "Pong but in a circle!"
+    return Theme.create(
+      Theme.config().textFont(Constants.DEFAULT_FONT)
+        .buttonDefaultBackground(Constants.BUTTON_BG)
+        .buttonHoverBackground(Constants.BUTTON_HOVER_BG)
+        .buttonPressedBackground(Constants.BUTTON_PRESSED_BG),
+      Stack.create(
+        Align.create(
+          Align.config().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.START),
+          Padding.create(
+            Padding.config().padding(128, 72),
+            Column.create(
+              Column.config().crossAxisAlignment(CrossAxisAlignment.CENTER).gapSize(2),
+              Text.create(
+                Text.config().font(Constants.HEADER_FONT).fontSize(80).alignment(Alignment.CENTER),
+                "Circle Pong"
+              ),
+              Text.create(
+                Text.config().fontSize(24).alignment(Alignment.CENTER),
+                "Pong + Circle = Pong Circle!"
+              )
             )
           )
-        )
-      ),
-      Align.create(
-        Align.config().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.CENTER),
-        Padding.create(
-          Padding.config().padding(128, 0, 0, 0),
-          Button.create(
-            Button.config().mouseListener(this::handleStartGame),
+        ),
+        Align.create(
+          Align.config().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.CENTER),
+          Padding.create(
+            Padding.config().padding(128, 0, 0, 0),
+            Column.create(
+              Column.config().crossAxisAlignment(CrossAxisAlignment.CENTER),
+              Button.create(
+                Button.config().mouseListener(this::handleStartGame),
+                Padding.create(
+                  Padding.config().padding(32, 16),
+                  Text.create("Play")
+                )
+              ),
+              Button.create(
+                Button.config().mouseListener(this::handleToggleHelpPanel),
+                Padding.create(
+                  Padding.config().padding(32, 16),
+                  Text.create("Help")
+                )
+              )
+            )
+          )
+        ),
+        Align.create(
+          Align.config().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.END),
+          Theme.create(
+            Theme.config().textFontSize(20).textAlignment(Alignment.CENTER),
             Padding.create(
-              Padding.config().padding(32, 16),
-              Text.create("Play")
+              Padding.config().padding(24),
+              Column.create(
+                Column.config().crossAxisAlignment(CrossAxisAlignment.CENTER).gapSize(4),
+                Text.create(
+                  Text.config(),
+                  "Kwame Opare Asiedu"
+                ),
+                Text.create(
+                  Text.config(),
+                  "GameKit v0.5.0-SNAPSHOT-1"
+                )
+              )
             )
           )
-        )
-      ),
-      Align.create(
-        Align.config().horizontalAlignment(Alignment.END).verticalAlignment(Alignment.END),
-        Padding.create(
-          Padding.config().padding(24),
-          Column.create(
-            Column.config().crossAxisAlignment(CrossAxisAlignment.END).gapSize(4),
-            Text.create(
-              Text.config().fontSize(16).alignment(Alignment.CENTER),
-              "Kwame Opare Asiedu"
-            ),
-            Text.create(
-              Text.config().fontSize(16).alignment(Alignment.CENTER),
-              "GameKit v0.5.0"
+        ),
+        createHelpPanel()
+      )
+    );
+  }
+
+  private Widget createHelpPanel() {
+    if (!showHelp)
+      return Empty.create();
+
+    return Padding.create(
+      Padding.config().padding(72, 0, 0, 0),
+      Sized.create(
+        Sized.config().fractionalWidth(0.65).height(420),
+        Panel.create(
+          Panel.config().background(Constants.PANEL_BG).ninePatch(16),
+          Padding.create(
+            Padding.config().padding(32),
+            Theme.create(
+              Theme.config().textColor(Color.WHITE)
+                .textAlignment(Alignment.CENTER).textFontSize(24),
+              Column.create(
+                Column.config().mainAxisAlignment(MainAxisAlignment.START)
+                  .crossAxisAlignment(CrossAxisAlignment.CENTER),
+                Text.create(
+                  Text.config().alignment(Alignment.CENTER)
+                    .font(Constants.HEADER_FONT).fontSize(48),
+                  "HELP"
+                ),
+                Text.create(
+                  Text.config(),
+                  "Keep the ball inside the circle for as long as possible."
+                ),
+                Text.create(
+                  Text.config(),
+                  "Move your mouse to rotate your paddle around the circle"
+                ),
+                Text.create(
+                  Text.config(),
+                  "It's so simple until it isn't. How long will you last?"
+                ),
+                Button.create(
+                  Button.config().mouseListener(this::handleToggleHelpPanel),
+                  Padding.create(
+                    Padding.config().padding(32, 16),
+                    Text.create("Close")
+                  )
+                )
+              )
             )
           )
         )
@@ -98,5 +166,12 @@ public class MenuScene extends Scene {
   private void handleStartGame(MouseEvent ev) {
     if (ev.type == MouseEvent.Type.CLICK)
       Application.getInstance().loadScene(new PlayScene());
+  }
+
+  private void handleToggleHelpPanel(MouseEvent ev) {
+    if (ev.type == MouseEvent.Type.CLICK) {
+      showHelp = !showHelp;
+      updateUI();
+    }
   }
 }

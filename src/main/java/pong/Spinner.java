@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.List;
 
 public class Spinner extends Entity {
-  private final double width = 1;
+  private final double width = 1.2;
   private final double height = 0.175;
   private double rotation = 0;
 
@@ -33,7 +33,7 @@ public class Spinner extends Entity {
     RigidBody rb = new RigidBody();
 
     rb.setCustomData("Spinner");
-    rb.addRectFixture(width, height, (fx, shape) -> { });
+    rb.addRectFixture(width, height);
 
     return List.of(rb);
   }
