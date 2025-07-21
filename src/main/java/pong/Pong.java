@@ -32,7 +32,7 @@ public class Pong extends Application {
   public Pong() {
     super(
       new Settings(
-        "GameKit - Pong",
+        "GameKit - Circle Pong",
         Resolution.create(640, 1000),
         WindowMode.WINDOWED,
         RenderingStrategy.SPEED,
