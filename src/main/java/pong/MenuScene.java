@@ -2,6 +2,7 @@ package pong;
 
 import dev.gamekit.animation.Animation;
 import dev.gamekit.core.Application;
+import dev.gamekit.core.Audio;
 import dev.gamekit.core.Renderer;
 import dev.gamekit.core.Scene;
 import dev.gamekit.ui.enums.Alignment;
@@ -27,6 +28,7 @@ public class MenuScene extends Scene {
   protected void start() {
     rotateAnim.start();
     bounceAnim.start();
+    Audio.get(Constants.MAIN_MENU_MUSIC_KEY).play(true);
   }
 
   @Override
@@ -130,13 +132,13 @@ public class MenuScene extends Scene {
     return Padding.create(
       Padding.config().padding(72, 0, 0, 0),
       Sized.create(
-        Sized.config().fractionalWidth(0.65).height(420),
+        Sized.config().fractionalWidth(0.5).height(420),
         Panel.create(
           Panel.config().background(Constants.PANEL_BG).ninePatch(16),
           Padding.create(
             Padding.config().padding(32),
             Theme.create(
-              Theme.config().textColor(Color.WHITE)
+              Theme.config().textColor(Color.BLACK)
                 .textAlignment(Alignment.CENTER).textFontSize(24),
               Column.create(
                 Column.config().mainAxisAlignment(MainAxisAlignment.START)
@@ -174,8 +176,10 @@ public class MenuScene extends Scene {
   }
 
   private void handleStartGame(MouseEvent ev) {
-    if (ev.type == MouseEvent.Type.CLICK)
+    if (ev.type == MouseEvent.Type.CLICK) {
       Application.getInstance().loadScene(new PlayScene());
+      Audio.get(Constants.HIT_SFX_KEY).play();
+    }
   }
 
   private void handleToggleHelpPanel(MouseEvent ev) {

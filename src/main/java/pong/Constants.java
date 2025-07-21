@@ -13,6 +13,9 @@ public class Constants {
   public static final BufferedImage BUTTON_BG = IO.getResourceImage("button-bg.png");
   public static final BufferedImage BUTTON_HOVER_BG = IO.getResourceImage("button-bg-hover.png");
   public static final BufferedImage BUTTON_PRESSED_BG = IO.getResourceImage("button-bg-pressed.png");
+  public static final String MAIN_MENU_MUSIC_KEY = "main-audio";
+  public static final String HIT_SFX_KEY = "hit";
+  public static final String GAME_OVER_SFX_KEY = "game-over";
 
   private Constants() { }
 }

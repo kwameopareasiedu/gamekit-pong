@@ -1,10 +1,8 @@
 package pong;
 
 import dev.gamekit.animation.Animation;
-import dev.gamekit.core.Application;
+import dev.gamekit.core.*;
 import dev.gamekit.core.Constants;
-import dev.gamekit.core.Renderer;
-import dev.gamekit.core.Scene;
 import dev.gamekit.ui.enums.Alignment;
 import dev.gamekit.ui.enums.CrossAxisAlignment;
 import dev.gamekit.ui.enums.MainAxisAlignment;
@@ -129,7 +127,7 @@ public class PlayScene extends Scene {
               Padding.create(
                 Padding.config().padding(32),
                 Theme.create(
-                  Theme.config().textColor(Color.WHITE)
+                  Theme.config().textColor(Color.BLACK)
                     .textAlignment(Alignment.CENTER).textFontSize(24),
                   Column.create(
                     Column.config().mainAxisAlignment(MainAxisAlignment.START)
@@ -179,7 +177,10 @@ public class PlayScene extends Scene {
       scoreDebounceTime = SCORE_DEBOUNCE_TIME_MS;
       score++;
       updateUI();
+      Audio.get(pong.Constants.HIT_SFX_KEY).play();
     } else if (tag == Tag.WALL) {
+      Audio.get(pong.Constants.GAME_OVER_SFX_KEY).play();
+
       Application.getInstance().scheduleTask(() -> {
         gameOver = true;
         updateUI();

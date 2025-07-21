@@ -1,15 +1,35 @@
 package pong;
 
+import dev.gamekit.audio.AudioClip2D;
+import dev.gamekit.audio.AudioGroup;
 import dev.gamekit.core.Application;
+import dev.gamekit.core.Audio;
 import dev.gamekit.settings.*;
 
 public class Pong extends Application {
+  static {
+    Audio.preload(
+      Constants.MAIN_MENU_MUSIC_KEY,
+      new AudioClip2D("ambient-music.wav", AudioGroup.MUSIC, 0.5)
+    );
+
+    Audio.preload(
+      Constants.HIT_SFX_KEY,
+      new AudioClip2D("hit.wav", AudioGroup.EFFECTS, 0.5)
+    );
+
+    Audio.preload(
+      Constants.GAME_OVER_SFX_KEY,
+      new AudioClip2D("game-over.wav", AudioGroup.EFFECTS, 0.5)
+    );
+  }
+
   public Pong() {
     super(
       new Settings(
         "GameKit - Pong",
-        Resolution.create(600, 840),
-        WindowMode.FULLSCREEN,
+        Resolution.create(714, 1000),
+        WindowMode.BORDERLESS,
         RenderingStrategy.SPEED,
         TextAntialiasing.ON,
         Antialiasing.ON
