@@ -22,14 +22,19 @@ public class Pong extends Application {
       Constants.GAME_OVER_SFX_KEY,
       new AudioClip2D("game-over.wav", AudioGroup.EFFECTS, 0.5)
     );
+
+    Audio.preload(
+      Constants.HOVER_BEEP_KEY,
+      new AudioClip2D("hover-beep.wav", AudioGroup.EFFECTS, 0.5)
+    );
   }
 
   public Pong() {
     super(
       new Settings(
         "GameKit - Pong",
-        Resolution.create(714, 1000),
-        WindowMode.BORDERLESS,
+        Resolution.create(640, 1000),
+        WindowMode.WINDOWED,
         RenderingStrategy.SPEED,
         TextAntialiasing.ON,
         Antialiasing.ON

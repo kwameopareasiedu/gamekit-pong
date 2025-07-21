@@ -35,17 +35,16 @@ public class MenuScene extends Scene {
   protected void render() {
     Renderer.clear(Constants.BG_COLOR);
     Renderer.fillRect(0, 0, 96, 232)
-      .withColor(Color.BLACK)
-      .withRotation(0, -64, 360 * rotateAnim.getValue());
-    Renderer.fillCircle(0, -64, 160).withColor(Color.WHITE);
+      .withColor(Color.RED).withRotation(0, -64, 360 * rotateAnim.getValue());
+    Renderer.fillCircle(0, -64, 160).withColor(Color.DARK_GRAY);
     Renderer.fillCircle(0, -64 + (int) (-300 * (bounceAnim.getValue() - 0.5)), 16)
-      .withColor(Color.GRAY);
+      .withColor(Color.CYAN);
   }
 
   @Override
   protected Widget createUI() {
     return Theme.create(
-      Theme.config().textFont(Constants.DEFAULT_FONT)
+      Theme.config().textFont(Constants.DEFAULT_FONT).textColor(Color.BLACK)
         .buttonDefaultBackground(Constants.BUTTON_BG)
         .buttonHoverBackground(Constants.BUTTON_HOVER_BG)
         .buttonPressedBackground(Constants.BUTTON_PRESSED_BG),
@@ -132,7 +131,7 @@ public class MenuScene extends Scene {
     return Padding.create(
       Padding.config().padding(72, 0, 0, 0),
       Sized.create(
-        Sized.config().fractionalWidth(0.5).height(420),
+        Sized.config().fractionalWidth(0.6).height(512),
         Panel.create(
           Panel.config().background(Constants.PANEL_BG).ninePatch(16),
           Padding.create(
@@ -154,11 +153,11 @@ public class MenuScene extends Scene {
                 ),
                 Text.create(
                   Text.config(),
-                  "Move your mouse to rotate your paddle around the circle"
+                  "Move your mouse to rotate your paddle around the circle."
                 ),
                 Text.create(
                   Text.config(),
-                  "It's so simple until it isn't. How long will you last?"
+                  "Seems quite simple, until it isn't. Let's see how long you last"
                 ),
                 Button.create(
                   Button.config().mouseListener(this::handleToggleHelpPanel),
@@ -177,6 +176,7 @@ public class MenuScene extends Scene {
 
   private void handleStartGame(MouseEvent ev) {
     if (ev.type == MouseEvent.Type.CLICK) {
+      Audio.get(Constants.HOVER_BEEP_KEY).play();
       Application.getInstance().loadScene(new PlayScene());
       Audio.get(Constants.HIT_SFX_KEY).play();
     }
@@ -184,6 +184,9 @@ public class MenuScene extends Scene {
 
   private void handleToggleHelpPanel(MouseEvent ev) {
     if (ev.type == MouseEvent.Type.CLICK) {
+      if (!showHelp)
+        Audio.get(Constants.HOVER_BEEP_KEY).play();
+
       showHelp = !showHelp;
       updateUI();
     }
@@ -191,6 +194,7 @@ public class MenuScene extends Scene {
 
   private void handleQuit(MouseEvent ev) {
     if (ev.type == MouseEvent.Type.CLICK) {
+      Audio.get(Constants.HOVER_BEEP_KEY).play();
       Application.getInstance().quit();
     }
   }
