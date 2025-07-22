@@ -16,8 +16,8 @@ import dev.gamekit.ui.widgets.Panel;
 import java.awt.*;
 
 public class MenuScene extends Scene {
-  private final Animation rotateAnim = new Animation(3000, Animation.RepeatMode.RESTART);
-  private final Animation bounceAnim = new Animation(1500, Animation.RepeatMode.ALTERNATE);
+  private final Animation rotateAnim = new Animation(4000, Animation.RepeatMode.RESTART);
+  private final Animation bounceAnim = new Animation(2000, Animation.RepeatMode.ALTERNATE);
   private boolean showHelp = false;
 
   public MenuScene() {
@@ -184,9 +184,7 @@ public class MenuScene extends Scene {
 
   private void handleToggleHelpPanel(MouseEvent ev) {
     if (ev.type == MouseEvent.Type.CLICK) {
-      if (!showHelp)
-        Audio.get(Constants.HOVER_BEEP_KEY).play();
-
+      Audio.get(Constants.HOVER_BEEP_KEY).play();
       showHelp = !showHelp;
       updateUI();
     }

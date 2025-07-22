@@ -20,12 +20,12 @@ public class Pong extends Application {
 
     Audio.preload(
       Constants.GAME_OVER_SFX_KEY,
-      new AudioClip2D("game-over.wav", AudioGroup.EFFECTS, 0.5)
+      new AudioClip2D("game-over.wav", AudioGroup.EFFECTS, 0.75)
     );
 
     Audio.preload(
       Constants.HOVER_BEEP_KEY,
-      new AudioClip2D("hover-beep.wav", AudioGroup.EFFECTS, 0.5)
+      new AudioClip2D("hover-beep.wav", AudioGroup.EFFECTS, 0.35)
     );
   }
 
