@@ -22,4 +22,114 @@
     </dependency>
   </dependencies>
 
+  <profiles>
+    <profile>
+      <id>build-linux</id>
+
+      <activation>
+        <os>
+          <family>unix</family>
+        </os>
+      </activation>
+
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>com.github.akman</groupId>
+              <artifactId>jpackage-maven-plugin</artifactId>
+              <version>0.1.5</version>
+
+              <configuration>
+                <type>PLATFORM</type>
+                <linuxshortcut>true</linuxshortcut>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+
+    <profile>
+      <id>build-win</id>
+
+      <activation>
+        <os>
+          <family>windows</family>
+        </os>
+      </activation>
+
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>com.github.akman</groupId>
+              <artifactId>jpackage-maven-plugin</artifactId>
+              <version>0.1.5</version>
+
+              <configuration>
+                <winshortcut>true</winshortcut>
+                <winperuserinstall>true</winperuserinstall>
+                <windirchooser>true</windirchooser>
+                <winmenu>true</winmenu>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+  </profiles>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.0</version>
+
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>pong.Pong</mainClass>
+                </transformer>
+              </transformers>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>com.github.akman</groupId>
+        <artifactId>jpackage-maven-plugin</artifactId>
+        <version>0.1.5</version>
+
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jpackage</goal>
+            </goals>
+            <configuration>
+              <name>Circle Pong</name>
+              <appversion>${project.version}</appversion>
+              <description>Pong + Circle = Pong Circle!</description>
+              <vendor>Kwame Opare Asiedu</vendor>
+              <input>target</input>
+              <dest>target/dist</dest>
+              <mainjar>pong-${project.version}.jar</mainjar>
+              <mainclass>pong.Pong</mainclass>
+              <resourcedir>res</resourcedir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
