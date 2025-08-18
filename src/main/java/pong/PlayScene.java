@@ -15,8 +15,7 @@ import java.awt.*;
 
 public class PlayScene extends Scene {
   private static final long SCORE_DEBOUNCE_TIME_MS = 250L;
-  private static final int PLAY_RADIUS = 2;
-  private static final int PLAY_RADIUS_PX = PLAY_RADIUS * Constants.PIXELS_PER_METER;
+  private static final int PLAY_RADIUS = 256;
   private static final int WALL_COUNT = 50;
 
   private final Spinner spinner = new Spinner();
@@ -40,13 +39,12 @@ public class PlayScene extends Scene {
     }
 
     double interval = 360.0 / WALL_COUNT;
-    double width = 12.75 / WALL_COUNT;
 
     for (double idx = 0; idx < 360; idx += interval) {
-      addChild(new Wall(width, PLAY_RADIUS + 0.15, idx));
+      addChild(new Wall(PLAY_RADIUS + 19.2, idx));
     }
 
-    addChild(new Paddle(PLAY_RADIUS - 0.05));
+    addChild(new Paddle(PLAY_RADIUS - 6.4));
     addChild(spinner);
     addChild(ball);
 
@@ -70,13 +68,13 @@ public class PlayScene extends Scene {
   @Override
   protected void update() {
     if (scoreDebounceTime > 0)
-      scoreDebounceTime -= Constants.FRAME_TIME_MS;
+      scoreDebounceTime -= Constants.FRAME_INTERVAL_MS;
   }
 
   @Override
   protected void render() {
     Renderer.clear(Color.WHITE);
-    Renderer.fillCircle(0, 0, PLAY_RADIUS_PX).withColor(Color.BLACK);
+    Renderer.fillCircle(0, 0, PLAY_RADIUS).withColor(Color.BLACK);
   }
 
   @Override
@@ -107,7 +105,7 @@ public class PlayScene extends Scene {
         Align.create(
           Align.config().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.END),
           Padding.create(
-            Padding.config().padding(24),
+            Padding.config().padding(24, 24, 24, 24),
             Column.create(
               Column.config().crossAxisAlignment(CrossAxisAlignment.CENTER).gapSize(0),
               Text.create("Score"),
@@ -123,9 +121,9 @@ public class PlayScene extends Scene {
           Sized.create(
             Sized.config().fractionalWidth(0.65).height(512),
             Panel.create(
-              Panel.config().background(pong.Constants.PANEL_BG).ninePatch(16),
+              Panel.config().background(pong.Constants.PANEL_BG).edgeInsets(16, 16, 16, 16),
               Padding.create(
-                Padding.config().padding(32),
+                Padding.config().padding(32, 32, 32, 32),
                 Theme.create(
                   Theme.config().textColor(Color.BLACK)
                     .textAlignment(Alignment.CENTER).textFontSize(24),
@@ -150,14 +148,14 @@ public class PlayScene extends Scene {
                       Button.create(
                         Button.config().mouseListener(this::handleRestart),
                         Padding.create(
-                          Padding.config().padding(32, 16),
+                          Padding.config().padding(16, 32, 16, 32),
                           Text.create("Restart")
                         )
                       ),
                       Button.create(
                         Button.config().mouseListener(this::handleQuit),
                         Padding.create(
-                          Padding.config().padding(32, 16),
+                          Padding.config().padding(16, 32, 16, 32),
                           Text.create("Main Menu")
                         )
                       )
@@ -181,7 +179,7 @@ public class PlayScene extends Scene {
     } else if (tag == Tag.WALL) {
       Audio.get(pong.Constants.GAME_OVER_SFX_KEY).play();
 
-      Application.getInstance().scheduleTask(() -> {
+      Application.getInstance().runLater(() -> {
         gameOver = true;
         updateUI();
       }, 1000);

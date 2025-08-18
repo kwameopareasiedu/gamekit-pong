@@ -52,7 +52,7 @@ public class MenuScene extends Scene {
         Align.create(
           Align.config().horizontalAlignment(Alignment.CENTER).verticalAlignment(Alignment.START),
           Padding.create(
-            Padding.config().padding(128, 72),
+            Padding.config().padding(72, 128, 72, 128),
             Column.create(
               Column.config().crossAxisAlignment(CrossAxisAlignment.CENTER).gapSize(2),
               Text.create(
@@ -77,21 +77,21 @@ public class MenuScene extends Scene {
                 Button.create(
                   Button.config().mouseListener(this::handleStartGame),
                   Padding.create(
-                    Padding.config().padding(32, 16),
+                    Padding.config().padding(16, 32, 16, 32),
                     Text.create("Play")
                   )
                 ),
                 Button.create(
                   Button.config().mouseListener(this::handleToggleHelpPanel),
                   Padding.create(
-                    Padding.config().padding(32, 16),
+                    Padding.config().padding(16, 32, 16, 32),
                     Text.create("Help")
                   )
                 ),
                 Button.create(
                   Button.config().mouseListener(this::handleQuit),
                   Padding.create(
-                    Padding.config().padding(32, 16),
+                    Padding.config().padding(16, 32, 16, 32),
                     Text.create("Quit")
                   )
                 )
@@ -104,7 +104,7 @@ public class MenuScene extends Scene {
           Theme.create(
             Theme.config().textFontSize(20).textAlignment(Alignment.CENTER),
             Padding.create(
-              Padding.config().padding(24),
+              Padding.config().padding(24, 24, 24, 24),
               Column.create(
                 Column.config().crossAxisAlignment(CrossAxisAlignment.CENTER).gapSize(4),
                 Text.create(
@@ -131,11 +131,11 @@ public class MenuScene extends Scene {
     return Padding.create(
       Padding.config().padding(72, 0, 0, 0),
       Sized.create(
-        Sized.config().fractionalWidth(0.6).height(512),
+        Sized.config().fractionalWidth(0.6).intrinsicHeight(),
         Panel.create(
-          Panel.config().background(Constants.PANEL_BG).ninePatch(16),
+          Panel.config().background(Constants.PANEL_BG).edgeInsets(16, 16, 16, 16),
           Padding.create(
-            Padding.config().padding(32),
+            Padding.config().padding(32, 32, 32, 32),
             Theme.create(
               Theme.config().textColor(Color.BLACK)
                 .textAlignment(Alignment.CENTER).textFontSize(24),
@@ -162,7 +162,7 @@ public class MenuScene extends Scene {
                 Button.create(
                   Button.config().mouseListener(this::handleToggleHelpPanel),
                   Padding.create(
-                    Padding.config().padding(32, 16),
+                    Padding.config().padding(16, 32, 16, 32),
                     Text.create("Close")
                   )
                 )

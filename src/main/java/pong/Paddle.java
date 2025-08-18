@@ -4,7 +4,6 @@ import dev.gamekit.components.RigidBody;
 import dev.gamekit.components.Transform;
 import dev.gamekit.core.*;
 import dev.gamekit.core.Component;
-import dev.gamekit.core.Constants;
 import dev.gamekit.core.Window;
 import dev.gamekit.utils.Position;
 
@@ -14,8 +13,8 @@ import java.util.List;
 import static dev.gamekit.utils.Math.radToDeg;
 
 public class Paddle extends Entity {
-  private final double width = 0.9;
-  private final double height = 0.15;
+  private final double width = 115.2;
+  private final double height = 19.2;
   private final double distance;
   private double rotation = 0;
 
@@ -29,10 +28,7 @@ public class Paddle extends Entity {
     RigidBody rb = new RigidBody();
 
     rb.setUserData(Tag.PADDLE);
-    rb.addRectFixture(
-      width, height,
-      (fx, shape) -> fx.setFriction(0)
-    );
+    rb.addRectFixture(width, height, (fx, shape) -> fx.setFriction(0));
     rb.setPosition(0, distance);
 
     return List.of(rb);
@@ -53,10 +49,9 @@ public class Paddle extends Entity {
   @Override
   protected void render() {
     Transform tx = findComponent(Transform.class);
-    int x = (int) (tx.getX() * Constants.PIXELS_PER_METER);
-    int y = (int) (tx.getY() * Constants.PIXELS_PER_METER);
-    int width = (int) (this.width * dev.gamekit.core.Constants.PIXELS_PER_METER);
-    int height = (int) (this.height * dev.gamekit.core.Constants.PIXELS_PER_METER);
-    Renderer.fillRect(x, y, width, height).withColor(Color.RED).withRotation(x, y, rotation);
+    int x = (int) tx.getX();
+    int y = (int) tx.getY();
+    Renderer.fillRect(x, y, (int) width, (int) height).withRotation(x, y, rotation)
+      .withColor(Color.RED);
   }
 }

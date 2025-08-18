@@ -2,9 +2,10 @@ package pong;
 
 import dev.gamekit.components.RigidBody;
 import dev.gamekit.components.Transform;
-import dev.gamekit.core.*;
 import dev.gamekit.core.Component;
-import dev.gamekit.core.Constants;
+import dev.gamekit.core.Entity;
+import dev.gamekit.core.IO;
+import dev.gamekit.core.Renderer;
 import dev.gamekit.utils.Vector;
 import org.dyn4j.geometry.MassType;
 
@@ -16,7 +17,7 @@ public class Ball extends Entity {
   private static final BufferedImage ARROW = IO.getResourceImage("arrow.png");
 
   private final ActionListener actionListener;
-  private final double radius = 0.125;
+  private final double radius = 16.0;
   private boolean launched = false;
 
   public Ball(ActionListener actionListener) {
@@ -31,7 +32,7 @@ public class Ball extends Entity {
     );
 
     rb.setGravityScale(0);
-    rb.setPosition(0, -1);
+    rb.setPosition(0, -128);
     rb.addCircleFixture(radius, (fx, shape) -> {
       fx.setDensity(12);
       fx.setRestitution(1);
@@ -51,13 +52,10 @@ public class Ball extends Entity {
   @Override
   protected void render() {
     Transform tx = findComponent(Transform.class);
-    int x = (int) (tx.getX() * Constants.PIXELS_PER_METER);
-    int y = (int) (tx.getY() * Constants.PIXELS_PER_METER);
-    int radius = (int) (this.radius * Constants.PIXELS_PER_METER);
-    Renderer.fillCircle(x, y, radius).withColor(Color.GREEN);
+    Renderer.fillCircle((int) tx.getX(), (int) tx.getY(), (int) radius).withColor(Color.GREEN);
 
     if (!launched) {
-      int iconY = (int) (-1.5 * Constants.PIXELS_PER_METER);
+      int iconY = -192;
       Renderer.drawImage(ARROW, 0, iconY, 48, 48).withRotation(0, iconY, 90);
     }
   }

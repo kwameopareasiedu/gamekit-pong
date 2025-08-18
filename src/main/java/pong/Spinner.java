@@ -9,8 +9,8 @@ import java.awt.*;
 import java.util.List;
 
 public class Spinner extends Entity {
-  private final double width = 1.2;
-  private final double height = 0.175;
+  private final double width = 153.6;
+  private final double height = 22.4;
   private double rotation = 0;
   private boolean spin = false;
 
@@ -43,9 +43,8 @@ public class Spinner extends Entity {
 
   @Override
   protected void render() {
-    int width = (int) (this.width * dev.gamekit.core.Constants.PIXELS_PER_METER);
-    int height = (int) (this.height * dev.gamekit.core.Constants.PIXELS_PER_METER);
-    Renderer.fillRect(0, 0, width, height).withColor(Color.CYAN).withRotation(0, 0, rotation);
+    Renderer.fillRect(0, 0, (int) width, (int) height).withColor(Color.CYAN)
+      .withRotation(0, 0, rotation);
   }
 
   void beginSpin() {

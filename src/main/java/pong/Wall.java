@@ -7,13 +7,11 @@ import dev.gamekit.core.Entity;
 import java.util.List;
 
 public class Wall extends Entity {
-  private final double width;
   private final double distance;
   private final double rotation;
 
-  public Wall(double width, double distanceFromCenter, double rotationDeg) {
+  public Wall(double distanceFromCenter, double rotationDeg) {
     super("Wall");
-    this.width = width;
     this.distance = distanceFromCenter;
     this.rotation = rotationDeg;
   }
@@ -23,7 +21,7 @@ public class Wall extends Entity {
     RigidBody rb = new RigidBody();
 
     rb.setUserData(Tag.WALL);
-    rb.addRectFixture(width, 0.1, (fx, shape) -> fx.setSensor(true));
+    rb.addRectFixture(40, 12.8, (fx, shape) -> fx.setSensor(true));
     rb.setRotation(rotation, 0, 0, 0, distance);
 
     return List.of(rb);
