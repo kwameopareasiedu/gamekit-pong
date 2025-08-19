@@ -1,8 +1,6 @@
 package pong;
 
 import dev.gamekit.animation.Animation;
-import dev.gamekit.components.Collider;
-import dev.gamekit.components.RigidBody;
 import dev.gamekit.core.*;
 import dev.gamekit.core.Constants;
 import dev.gamekit.ui.enums.Alignment;
