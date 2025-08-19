@@ -1,5 +1,6 @@
 package pong;
 
+import dev.gamekit.components.BoxCollider;
 import dev.gamekit.components.RigidBody;
 import dev.gamekit.core.Component;
 import dev.gamekit.core.Entity;
@@ -18,12 +19,13 @@ public class Wall extends Entity {
 
   @Override
   protected List<Component> getComponents() {
-    RigidBody rb = new RigidBody();
+    BoxCollider collider = new BoxCollider(56, 12.8);
+    collider.setMetaData(Tag.WALL);
+    collider.setSensor(true);
 
-    rb.setUserData(Tag.WALL);
-    rb.addRectFixture(40, 12.8, (fx, shape) -> fx.setSensor(true));
+    RigidBody rb = new RigidBody();
     rb.setRotation(rotation, 0, 0, 0, distance);
 
-    return List.of(rb);
+    return List.of(collider, rb);
   }
 }

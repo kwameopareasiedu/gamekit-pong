@@ -1,6 +1,8 @@
 package pong;
 
 import dev.gamekit.animation.Animation;
+import dev.gamekit.components.Collider;
+import dev.gamekit.components.RigidBody;
 import dev.gamekit.core.*;
 import dev.gamekit.core.Constants;
 import dev.gamekit.ui.enums.Alignment;
@@ -41,7 +43,7 @@ public class PlayScene extends Scene {
     double interval = 360.0 / WALL_COUNT;
 
     for (double idx = 0; idx < 360; idx += interval) {
-      addChild(new Wall(PLAY_RADIUS + 19.2, idx));
+      addChild(new Wall(PLAY_RADIUS + 32, idx));
     }
 
     addChild(new Paddle(PLAY_RADIUS - 6.4));

@@ -1,11 +1,11 @@
 package pong;
 
+import dev.gamekit.components.CircleCollider;
+import dev.gamekit.components.Collider;
 import dev.gamekit.components.RigidBody;
 import dev.gamekit.components.Transform;
+import dev.gamekit.core.*;
 import dev.gamekit.core.Component;
-import dev.gamekit.core.Entity;
-import dev.gamekit.core.IO;
-import dev.gamekit.core.Renderer;
 import dev.gamekit.utils.Vector;
 import org.dyn4j.geometry.MassType;
 
@@ -27,26 +27,27 @@ public class Ball extends Entity {
 
   @Override
   protected List<Component> getComponents() {
-    RigidBody rb = new RigidBody(
-      MassType.NORMAL, new Vector(), 0.25, 1
+    CircleCollider collider = new CircleCollider(radius);
+    collider.setDensity(12);
+    collider.setRestitution(1);
+    collider.setFriction(0);
+    collider.setCollisionListener(
+      new Physics.CollisionListener() {
+        @Override
+        public void onCollisionEnter(Collider.BodyAttachedFixture fx) {
+          Object data = fx.getUserData();
+
+          if (data instanceof Tag tag)
+            actionListener.onTagCollision(tag);
+        }
+      }
     );
 
+    RigidBody rb = new RigidBody(MassType.NORMAL, new Vector(), 0.25, 1);
     rb.setGravityScale(0);
     rb.setPosition(0, -128);
-    rb.addCircleFixture(radius, (fx, shape) -> {
-      fx.setDensity(12);
-      fx.setRestitution(1);
-      fx.setFriction(0);
-    });
 
-    rb.addCollisionListener((body1, fixture1, body2, fixture2) -> {
-      Object data = body2.getUserData();
-
-      if (data instanceof Tag tag)
-        actionListener.onTagCollision(tag);
-    });
-
-    return List.of(rb);
+    return List.of(collider, rb);
   }
 
   @Override

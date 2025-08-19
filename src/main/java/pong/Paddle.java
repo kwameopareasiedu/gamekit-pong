@@ -1,5 +1,6 @@
 package pong;
 
+import dev.gamekit.components.BoxCollider;
 import dev.gamekit.components.RigidBody;
 import dev.gamekit.components.Transform;
 import dev.gamekit.core.*;
@@ -25,13 +26,13 @@ public class Paddle extends Entity {
 
   @Override
   protected List<Component> getComponents() {
+    BoxCollider collider = new BoxCollider(width, height);
+    collider.setMetaData(Tag.PADDLE);
+    collider.setFriction(0);
+
     RigidBody rb = new RigidBody();
 
-    rb.setUserData(Tag.PADDLE);
-    rb.addRectFixture(width, height, (fx, shape) -> fx.setFriction(0));
-    rb.setPosition(0, distance);
-
-    return List.of(rb);
+    return List.of(collider, rb);
   }
 
   @Override
@@ -51,7 +52,7 @@ public class Paddle extends Entity {
     Transform tx = findComponent(Transform.class);
     int x = (int) tx.getX();
     int y = (int) tx.getY();
-    Renderer.fillRect(x, y, (int) width, (int) height).withRotation(x, y, rotation)
-      .withColor(Color.RED);
+    Renderer.fillRect(x, y, (int) width, (int) height)
+      .withRotation(x, y, rotation).withColor(Color.PINK);
   }
 }
