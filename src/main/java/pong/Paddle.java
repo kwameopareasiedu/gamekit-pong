@@ -7,17 +7,17 @@ import dev.gamekit.core.*;
 import dev.gamekit.core.Component;
 import dev.gamekit.core.Window;
 import dev.gamekit.utils.Position;
+import dev.gamekit.utils.Vector;
 
 import java.awt.*;
 import java.util.List;
 
-import static dev.gamekit.utils.Math.radToDeg;
-
 public class Paddle extends Entity {
+  private static final double HALF_PI = Math.PI / 2;
+
   private final double width = 115.2;
   private final double height = 19.2;
   private final double distance;
-  private double rotation = 0;
 
   public Paddle(double distanceFromCenter) {
     super("Paddle");
@@ -41,7 +41,7 @@ public class Paddle extends Entity {
     Position mousePos = Input.getMousePosition();
     int centerX = mousePos.x - winInfo.displayCenterX();
     int centerY = mousePos.y - winInfo.displayCenterY();
-    rotation = 90 + radToDeg(Math.atan2(centerY, centerX));
+    double rotation = HALF_PI + Math.atan2(centerY, centerX);
 
     RigidBody rb = findComponent(RigidBody.class);
     rb.setRotation(rotation, 0, 0, 0, distance);
@@ -50,9 +50,10 @@ public class Paddle extends Entity {
   @Override
   protected void render() {
     Transform tx = findComponent(Transform.class);
-    int x = (int) tx.getX();
-    int y = (int) tx.getY();
+    Vector globalPosition = tx.getGlobalPosition();
+    int x = (int) globalPosition.x;
+    int y = (int) globalPosition.y;
     Renderer.fillRect(x, y, (int) width, (int) height)
-      .withRotation(x, y, rotation).withColor(Color.PINK);
+      .withRotation(x, y, tx.getGlobalRotation()).withColor(Color.PINK);
   }
 }

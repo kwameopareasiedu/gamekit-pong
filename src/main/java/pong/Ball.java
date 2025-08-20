@@ -53,11 +53,17 @@ public class Ball extends Entity {
   @Override
   protected void render() {
     Transform tx = findComponent(Transform.class);
-    Renderer.fillCircle((int) tx.getX(), (int) tx.getY(), (int) radius).withColor(Color.GREEN);
+    Vector globalPosition = tx.getGlobalPosition();
+    Renderer.fillCircle(
+      (int) globalPosition.x,
+      (int) globalPosition.y,
+      (int) radius
+    ).withColor(Color.GREEN);
 
     if (!launched) {
       int iconY = -192;
-      Renderer.drawImage(ARROW, 0, iconY, 48, 48).withRotation(0, iconY, 90);
+      Renderer.drawImage(ARROW, 0, iconY, 48, 48)
+        .withRotation(0, iconY, Math.PI / 2);
     }
   }
 

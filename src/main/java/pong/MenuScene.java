@@ -35,7 +35,7 @@ public class MenuScene extends Scene {
   protected void render() {
     Renderer.clear(Constants.BG_COLOR);
     Renderer.fillRect(0, 0, 96, 232)
-      .withColor(Color.RED).withRotation(0, -64, 360 * rotateAnim.getValue());
+      .withColor(Color.RED).withRotation(0, -64, 2 * Math.PI * rotateAnim.getValue());
     Renderer.fillCircle(0, -64, 160).withColor(Color.DARK_GRAY);
     Renderer.fillCircle(0, -64 + (int) (-300 * (bounceAnim.getValue() - 0.5)), 16)
       .withColor(Color.CYAN);

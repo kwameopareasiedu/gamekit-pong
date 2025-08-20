@@ -7,6 +7,8 @@ import dev.gamekit.core.Entity;
 
 import java.util.List;
 
+import static dev.gamekit.utils.Math.degToRad;
+
 public class Wall extends Entity {
   private final double distance;
   private final double rotation;
@@ -14,7 +16,7 @@ public class Wall extends Entity {
   public Wall(double distanceFromCenter, double rotationDeg) {
     super("Wall");
     this.distance = distanceFromCenter;
-    this.rotation = rotationDeg;
+    this.rotation = degToRad(rotationDeg);
   }
 
   @Override

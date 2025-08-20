@@ -22,12 +22,8 @@ public class Spinner extends Entity {
   @Override
   protected void update() {
     if (spin) {
-      rotation += 0.75;
-
-      if (rotation >= 360)
-        rotation -= 360;
-
       RigidBody rb = findComponent(RigidBody.class);
+      rotation = (rotation + 0.01) % (2 * Math.PI);
       rb.setRotation(rotation);
     }
   }
